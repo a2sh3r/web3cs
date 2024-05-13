@@ -5,6 +5,8 @@ import RegisterDoctor from './components/body/registerDoctor';
 import RegisterPatient from './components/body/registerPatient';
 import RegisterVisit from './components/body/registerVisit';
 import PatientHistoryComponent from './components/body/patientHistory';
+import Header from './components/header/header';
+import Footer from './components/footer/footer';
 
 function App() {
   const [web3, setWeb3] = useState(null);
@@ -103,13 +105,15 @@ function App() {
 
   return (
     <div>
+      <Header />
       <div>Your account is: {account}</div>
-      <div className="flex flex-col items-center justify-center h-screen space-y-1">
+      <div className="flex flex-col items-center justify-center h-screen space-y-10">
         <RegisterDoctor onRegister={registerDoctor} />
         <RegisterPatient onRegister={registerPacient} />
         <RegisterVisit onRegister={registerVisit} />
         <PatientHistoryComponent contract={contract} account={account} />
       </div>
+      <Footer />
     </div>
   );
 }

@@ -98,15 +98,6 @@ const Header = () => {
                 <li>
                   <a
                     class="block w-full whitespace-nowrap bg-white px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-zinc-200/40 focus:bg-zinc-200/40 focus:outline-none active:bg-zinc-200/40 active:no-underline dark:bg-surface-dark dark:text-black dark:hover:bg-neutral-100/25 dark:focus:bg-neutral-100/25 dark:active:bg-neutral-100/25"
-                    href="#"
-                    data-twe-dropdown-item-ref
-                  >
-                    How To
-                  </a>
-                </li>
-                <li>
-                  <a
-                    class="block w-full whitespace-nowrap bg-white px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-zinc-200/40 focus:bg-zinc-200/40 focus:outline-none active:bg-zinc-200/40 active:no-underline dark:bg-surface-dark dark:text-black dark:hover:bg-neutral-100/25 dark:focus:bg-neutral-100/25 dark:active:bg-neutral-100/25"
                     href="https://github.com/a2sh3r/web3cs"
                     data-twe-dropdown-item-ref
                   >

@@ -24,8 +24,8 @@ const RegisterPatient = ({ onRegister }) => {
   };
 
   return (
-    <div className="flex h-screen">
-      <div className="w-1/2 flex items-center justify-center">
+    <div>
+      <div>
         <button
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
           onClick={() => setIsOpen(true)}

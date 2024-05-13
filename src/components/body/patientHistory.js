@@ -29,34 +29,36 @@ const PatientHistoryComponent = ({ contract, account }) => {
 
   return (
     <div>
-      <input
-        type="text"
-        value={patientAddress}
-        onChange={(e) => setPatientAddress(e.target.value)}
-        placeholder="Enter patient's address"
-        className="border p-2 w-full mb-2"
-      />
-      <button
-        className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
-        onClick={getPatientHistory}
-      >
-        Get Patient History
-      </button>
-      {isLoading && <p>Loading...</p>}
-      {errorMessage && <p className="text-red-500">{errorMessage}</p>}
-      {patientHistory.length > 0 && (
-        <div>
-          <h2>Patient History:</h2>
-          {patientHistory.map((visit, index) => (
-            <div key={index}>
-              <p>Date: {visit.date}</p>
-              <p>Doctor Address: {visit.doctorAddress}</p>
-              <p>Complaints: {visit.complaints}</p>
-              <p>Treatment: {visit.treatment}</p>
-            </div>
-          ))}
-        </div>
-      )}
+      <div className="text-center">
+        <input
+          type="text"
+          value={patientAddress}
+          onChange={(e) => setPatientAddress(e.target.value)}
+          placeholder="Enter patient's address"
+          className="border p-2 w-full mb-2"
+        />
+        <button
+          className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mb-4"
+          onClick={getPatientHistory}
+        >
+          Get Patient History
+        </button>
+        {isLoading && <p>Loading...</p>}
+        {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+        {patientHistory.length > 0 && (
+          <div>
+            <h2>Patient History:</h2>
+            {patientHistory.map((visit, index) => (
+              <div key={index}>
+                <p>Date: {visit.date}</p>
+                <p>Doctor Address: {visit.doctorAddress}</p>
+                <p>Complaints: {visit.complaints}</p>
+                <p>Treatment: {visit.treatment}</p>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 };
