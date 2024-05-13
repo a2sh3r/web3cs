@@ -3,6 +3,8 @@ import Web3 from 'web3';
 import contractABI from './contract/abi.json'; // Путь к файлу ABI вашего контракта
 import RegisterDoctor from './components/body/registerDoctor';
 import RegisterPatient from './components/body/registerPatient';
+import RegisterVisit from './components/body/registerVisit';
+import PatientHistoryComponent from './components/body/patientHistory';
 
 function App() {
   const [web3, setWeb3] = useState(null);
@@ -42,6 +44,35 @@ function App() {
     }
   };
 
+  const registerVisit = async (
+    pacientAddress,
+    timestamp,
+    doctorAddress,
+    complaints,
+    treatment
+  ) => {
+    if (contract && web3) {
+      try {
+        const gasPrice = await web3.eth.getGasPrice();
+        const result = await contract.methods
+          .recordVisit(
+            pacientAddress,
+            timestamp,
+            doctorAddress,
+            complaints,
+            treatment
+          )
+          .send({
+            from: account,
+            gasPrice: gasPrice,
+          });
+        console.log('Result:', result);
+      } catch (error) {
+        console.error('Error adding visit', error);
+      }
+    }
+  };
+
   useEffect(() => {
     async function load() {
       if (window.ethereum) {
@@ -53,7 +84,7 @@ function App() {
           setWeb3(web3Instance);
 
           // Подключение к контракту
-          const contractAddress = '0xE7359010454B06aa855993C2f198c50Cc438cA53'; // Замените на ваш адрес контракта
+          const contractAddress = '0x9bEf4927Cb431caAB82F90A14B63106ecfDE8872'; // Замените на ваш адрес контракта
           const instance = new web3Instance.eth.Contract(
             contractABI,
             contractAddress
@@ -73,8 +104,12 @@ function App() {
   return (
     <div>
       <div>Your account is: {account}</div>
-      {/* <RegisterDoctor onRegister={registerDoctor} /> */}
-      <RegisterPatient onRegister={registerPacient} />
+      <div className="flex flex-col items-center justify-center h-screen space-y-1">
+        <RegisterDoctor onRegister={registerDoctor} />
+        <RegisterPatient onRegister={registerPacient} />
+        <RegisterVisit onRegister={registerVisit} />
+        <PatientHistoryComponent contract={contract} account={account} />
+      </div>
     </div>
   );
 }

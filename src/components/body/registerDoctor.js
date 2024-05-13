@@ -4,16 +4,19 @@ const RegisterDoctor = ({ onRegister }) => {
   const [doctorAddress, setDoctorAddress] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState(''); // Состояние для хранения сообщения об ошибке
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleRegister = async () => {
+    setIsLoading(true);
     try {
       await onRegister(doctorAddress);
       setDoctorAddress('');
       setIsOpen(false);
       setErrorMessage(''); // Очищаем сообщение об ошибке при успешной регистрации
+      setIsLoading(false);
     } catch (error) {
       console.error('Error registering doctor:', error);
-      // Проверяем, является ли ошибка о том, что доктор уже зарегистрирован
+      setIsLoading(false);
       if (error.message.includes('Doctor already registered')) {
         setErrorMessage('Doctor already registered');
       } else {
@@ -48,7 +51,10 @@ const RegisterDoctor = ({ onRegister }) => {
             <div className="flex justify-end">
               <button
                 className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mr-2"
-                onClick={() => setIsOpen(false)}
+                onClick={() => {
+                  setIsOpen(false);
+                  setIsLoading(false);
+                }}
               >
                 Cancel
               </button>
@@ -59,6 +65,11 @@ const RegisterDoctor = ({ onRegister }) => {
                 Register
               </button>
             </div>
+            {isLoading && (
+              <div className="flex items-center justify-center mb-4">
+                <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-blue-500"></div>
+              </div>
+            )}
           </div>
         </div>
       )}

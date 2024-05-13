@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
-const RegisterPatient = ({ onRegister }) => {
+const RegisterVisit = ({ onRegister }) => {
   const [patientAddress, setPatientAddress] = useState('');
-  const [patientName, setPatientName] = useState('');
+  const [timestamp, setTimestamp] = useState(new Date());
+  const [doctorAddress, setDoctorAddress] = useState('');
+  const [complaints, setComplaints] = useState('');
+  const [treatment, setTreatment] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -10,15 +15,23 @@ const RegisterPatient = ({ onRegister }) => {
   const handleRegister = async () => {
     setIsLoading(true);
     try {
-      await onRegister(patientAddress, patientName);
+      await onRegister(
+        patientAddress,
+        timestamp.toISOString(),
+        doctorAddress,
+        complaints,
+        treatment
+      );
       setPatientAddress('');
-      setPatientName('');
+      setTimestamp(new Date());
+      setDoctorAddress('');
+      setComplaints('');
+      setTreatment('');
       setIsOpen(false);
       setErrorMessage('');
-      setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
-      console.error('Error registering patient:', error);
+      console.error('Error registering visit:', error);
       setErrorMessage(error.message);
     }
   };
@@ -30,7 +43,7 @@ const RegisterPatient = ({ onRegister }) => {
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
           onClick={() => setIsOpen(true)}
         >
-          Register Patient
+          Register Visit
         </button>
       </div>
       {isOpen && (
@@ -43,11 +56,35 @@ const RegisterPatient = ({ onRegister }) => {
               placeholder="Enter patient's address"
               className="border p-2 w-full mb-2"
             />
+            <DatePicker
+              selected={timestamp}
+              onChange={(date) => setTimestamp(date)}
+              showTimeSelect
+              timeFormat="HH:mm"
+              timeIntervals={15}
+              timeCaption="time"
+              dateFormat="MMMM d, yyyy h:mm aa"
+              className="border p-2 w-full mb-2"
+            />
             <input
               type="text"
-              value={patientName}
-              onChange={(e) => setPatientName(e.target.value)}
-              placeholder="Enter patient's name"
+              value={doctorAddress}
+              onChange={(e) => setDoctorAddress(e.target.value)}
+              placeholder="Enter doctor's address"
+              className="border p-2 w-full mb-2"
+            />
+            <input
+              type="text"
+              value={complaints}
+              onChange={(e) => setComplaints(e.target.value)}
+              placeholder="Enter complaints"
+              className="border p-2 w-full mb-2"
+            />
+            <input
+              type="text"
+              value={treatment}
+              onChange={(e) => setTreatment(e.target.value)}
+              placeholder="Enter treatment"
               className="border p-2 w-full mb-4"
             />
             {errorMessage && (
@@ -82,4 +119,4 @@ const RegisterPatient = ({ onRegister }) => {
   );
 };
 
-export default RegisterPatient;
+export default RegisterVisit;
